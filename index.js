@@ -15,7 +15,7 @@ express()
     .post('/ephemeral_keys', (req, res) => {
         console.log(req.body)
         // noinspection JSUnresolvedVariable
-        const customerID = req.body.costomer_id;
+        const customerID = req.body.customer_id;
         const apiVersion = req.body.api_version;
         console.log(customerID, apiVersion)
 
