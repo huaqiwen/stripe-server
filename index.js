@@ -19,6 +19,8 @@ express()
     .use(bodyParser.urlencoded({ extended: true }))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
+
+    // For ephemeral keys
     .post('/ephemeral_keys', (req, res) => {
         console.log(req.body)
         // noinspection JSUnresolvedVariable
@@ -32,10 +34,32 @@ express()
         ).then((key) => {
             res.status(200).send(key)
         }).catch((err) => {
-            console.log(err, req.body)
+            console.log(err)
             res.status(500).end()
         });
     })
+
+    // Attaches a payment method with StripeID to a customer of Customer ID
+    .post('/attach_pm', (req, res) => {
+        console.log(req.body)
+        // noinspection JSUnresolvedVariable
+        const customerID = req.body.customer_id;
+        // noinspection JSUnresolvedVariable
+        const stripeID = req.body.stripe_id
+        console.log(customerID, stripeID)
+
+        stripe.paymentMethods.attach(
+            stripeID,
+            { customer: customerID }
+        ).then(value => {
+            res.status(200).send(value)
+        }).catch((err => {
+            console.log(err)
+            res.status(500).end()
+        }))
+    })
+
+    // For testing purposes
     .get('/', (req, res) => {
         res.status(200).send('Hello world!')
     })
