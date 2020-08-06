@@ -1,3 +1,10 @@
+/**
+ * @desc This is the backend for communication between
+ * the mobile ends and the Stripe API.
+ * @url https://gentle-lowlands-66593.herokuapp.com/.
+ * @author Qiwen Hua
+ */
+
 const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
@@ -19,10 +26,10 @@ express()
         const apiVersion = req.body.api_version;
         console.log(customerID, apiVersion)
 
-        stripe.ephemeralKeys.create({
-            customer: customerID,
-            apiVersion: apiVersion
-        }).then((key) => {
+        stripe.ephemeralKeys.create(
+            { customer: customerID },
+            { apiVersion: apiVersion }
+        ).then((key) => {
             res.status(200).send(key)
         }).catch((err) => {
             console.log(err, req.body)
