@@ -16,10 +16,11 @@ express()
         // noinspection JSUnresolvedVariable
         const customerID = req.body.costomer_id;
         const apiVersion = req.body.api_version;
+        console.log(customerID, apiVersion)
 
         stripe.ephemeralKeys.create({
             customer: customerID,
-            stripe_version: apiVersion
+            apiVersion: apiVersion
         }).then((key) => {
             res.status(200).send(key)
         }).catch((err) => {
@@ -28,7 +29,7 @@ express()
         });
     })
     .get('/', (req, res) => {
-        res.status(500).send('Hello world!')
+        res.status(200).send('Hello world!')
     })
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
