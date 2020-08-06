@@ -9,8 +9,13 @@ express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 const app = express();
-const stripe = require('stripe')('pk_test_51HCrBpIazuHtyn2CE7C3GDruQL1WjX0dUXVV0XlT0c1rOmHHaZOa6x3JzDlfsvIRVsr1qnAsDpNZRAaBv4ZKfd0h001FQaRjX9');
+const stripe = require('stripe')('sk_test_51HCrBpIazuHtyn2CnkySWfrMk70lU79XbuJLFg8Z1g8KC5HlvXwki8MOv5o2k4g7C0xdQmosXIZHJk1BS5LF7LFG00nTWPzboy');
 const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // noinspection JSUnresolvedFunction
 app.post('/ephemeral_keys', (req, res) => {
@@ -28,3 +33,9 @@ app.post('/ephemeral_keys', (req, res) => {
         res.status(500).end()
     });
 });
+
+// const paymentIntent = await stripe.paymentIntents.create({
+//     amount: 1500,
+//     currency: 'cad',
+// });
+// const clientSecret = paymentIntent.client_secret
