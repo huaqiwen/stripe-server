@@ -13,6 +13,7 @@ express()
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
     .post('/ephemeral_keys', (req, res) => {
+        console.log(req.body)
         // noinspection JSUnresolvedVariable
         const customerID = req.body.costomer_id;
         const apiVersion = req.body.api_version;
