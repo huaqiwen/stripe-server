@@ -68,7 +68,7 @@ express()
     })
 
     // Create payment intent and pass a client secret back to client
-    .post('/secret', (req, res) => {
+    .post('/create_payment_intent', (req, res) => {
         console.log(req.body)
         const plan = req.body["plan"]
         stripe.paymentIntents.create({
