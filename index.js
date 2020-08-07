@@ -75,7 +75,7 @@ express()
             amount: subscriptionPlan[plan],
             currency: 'cad'
         }).then((intent) => {
-            res.status(200).send(intent.client_secret)
+            res.status(200).send({ "client_secret" : intent.client_secret })
         }).catch((err) => {
             console.log(err)
             res.status(500).end()
