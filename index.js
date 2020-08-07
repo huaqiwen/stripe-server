@@ -74,6 +74,7 @@ express()
         const customerID = req.body["customer_id"];
 
         stripe.paymentIntents.create({
+            description: "purchase subscription plan of: " + plan,
             customer: customerID,
             amount: subscriptionPlan[plan],
             currency: 'cad'
