@@ -71,7 +71,10 @@ express()
     .post('/create_payment_intent', (req, res) => {
         console.log(req.body)
         const plan = req.body["plan"]
+        const customerID = req.body["customer_id"];
+
         stripe.paymentIntents.create({
+            customer: customerID,
             amount: subscriptionPlan[plan],
             currency: 'cad'
         }).then((intent) => {
