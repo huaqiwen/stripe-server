@@ -10,7 +10,15 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 
 const bodyParser = require('body-parser');
+// noinspection JSValidateTypes
 const stripe = require('stripe')('sk_test_51HCrBpIazuHtyn2CnkySWfrMk70lU79XbuJLFg8Z1g8KC5HlvXwki8MOv5o2k4g7C0xdQmosXIZHJk1BS5LF7LFG00nTWPzboy');
+
+// Prices for subscription plan charges
+const subscriptionPlan = {
+    "low" : 1000,
+    "med" : 1500,
+    "high" : 2000,
+}
 
 // noinspection JSUnresolvedFunction
 express()
@@ -23,8 +31,7 @@ express()
     // For ephemeral keys
     .post('/ephemeral_keys', (req, res) => {
         console.log(req.body)
-        // noinspection JSUnresolvedVariable
-        const customerID = req.body.customer_id;
+        const customerID = req.body["customer_id"];
         const apiVersion = req.body.api_version;
         console.log(customerID, apiVersion)
 
@@ -42,27 +49,41 @@ express()
     // Attaches a payment method with StripeID to a customer of Customer ID
     .post('/attach_pm', (req, res) => {
         console.log(req.body)
-        // noinspection JSUnresolvedVariable
-        const customerID = req.body.customer_id;
-        // noinspection JSUnresolvedVariable
-        const stripeID = req.body.stripe_id
+        const customerID = req.body["customer_id"];
+        const stripeID = req.body["stripe_id"]
         console.log(customerID, stripeID)
 
         stripe.paymentMethods.attach(
             stripeID,
             { customer: customerID }
-        ).then(value => {
+        ).then((value) => {
             res.status(200).send(value)
-        }).catch((err => {
+        }).catch(err => {
             console.log(err)
             res.status(500).end()
-        }))
+        })
+    })
+
+    // Create payment intent and pass a client secret back to client
+    .post('/secret', (req, res) => {
+        console.log(req.body)
+        const plan = req.body["plan"]
+        stripe.paymentIntents.create({
+            amount: subscriptionPlan[plan],
+            currency: 'cad'
+        }).then((intent) => {
+            res.status(200).send(intent.client_secret)
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).end()
+        })
     })
 
     // For testing purposes
     .get('/', (req, res) => {
         res.status(200).send('Hello world!')
     })
+
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 // const paymentIntent = await stripe.paymentIntents.create({
