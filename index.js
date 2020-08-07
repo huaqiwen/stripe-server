@@ -1,7 +1,7 @@
 /**
  * @desc This is the backend for communication between
  * the mobile ends and the Stripe API.
- * @url https://gentle-lowlands-66593.herokuapp.com/.
+ * @url https://stripe-server-test.herokuapp.com/.
  * @author Qiwen Hua
  */
 
