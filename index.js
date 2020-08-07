@@ -15,9 +15,9 @@ const stripe = require('stripe')('sk_test_51HCrBpIazuHtyn2CnkySWfrMk70lU79XbuJLF
 
 // Prices for subscription plan charges
 const subscriptionPlan = {
-    "low" : 1000,
-    "med" : 1500,
-    "high" : 2000,
+    "low" : 1500,
+    "med" : 1800,
+    "high" : 2300,
 }
 
 // noinspection JSUnresolvedFunction
