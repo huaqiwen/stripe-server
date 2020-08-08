@@ -90,9 +90,3 @@ express()
     })
 
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-// const paymentIntent = await stripe.paymentIntents.create({
-//     amount: 1500,
-//     currency: 'cad',
-// });
-// const clientSecret = paymentIntent.client_secret
