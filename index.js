@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 5000
 const SECRET_KEY = 'sk_test_51HCrBpIazuHtyn2CnkySWfrMk70lU79XbuJLFg8Z1g8KC5HlvXwki8MOv5o2k4g7C0xdQmosXIZHJk1BS5LF7LFG00nTWPzboy'
 
 const bodyParser = require('body-parser');
-// noinspection JSValidateTypes
 const stripe = require('stripe')(SECRET_KEY);
 
 // Prices for subscription plan charges
@@ -23,7 +22,6 @@ const subscriptionPlan = {
     "high" : 2300,
 }
 
-// noinspection JSUnresolvedFunction
 express()
     .use(express.static(path.join(__dirname, 'public')))
     .use(bodyParser.json())
@@ -31,10 +29,10 @@ express()
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
 
-    // For ephemeral keys
+    // Fetch ephemeral keys by `customer_id` and `api_version`
     .post('/ephemeral_keys', (req, res) => {
         console.log(req.body)
-        const customerID = req.body["customer_id"];
+        const customerID = req.body.customer_id;
         const apiVersion = req.body.api_version;
         console.log(customerID, apiVersion)
 
@@ -52,8 +50,8 @@ express()
     // Attaches a payment method with StripeID to a customer of Customer ID
     .post('/attach_pm', (req, res) => {
         console.log(req.body)
-        const customerID = req.body["customer_id"];
-        const stripeID = req.body["stripe_id"]
+        const customerID = req.body.customer_id
+        const stripeID = req.body.stripe_id
         console.log(customerID, stripeID)
 
         stripe.paymentMethods.attach(
@@ -70,8 +68,8 @@ express()
     // Create payment intent and pass a client secret back to client
     .post('/create_payment_intent', (req, res) => {
         console.log(req.body)
-        const plan = req.body["plan"]
-        const customerID = req.body["customer_id"];
+        const customerID = req.body.customer_id;
+        const plan = req.body.plan;
 
         stripe.paymentIntents.create({
             description: "purchase subscription plan of: " + plan,
