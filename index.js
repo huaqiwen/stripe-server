@@ -34,7 +34,6 @@ express()
         console.log(req.body)
         const customerID = req.body.customer_id;
         const apiVersion = req.body.api_version;
-        console.log(customerID, apiVersion)
 
         stripe.ephemeralKeys.create(
             { customer: customerID },
@@ -52,7 +51,6 @@ express()
         console.log(req.body)
         const customerID = req.body.customer_id
         const stripeID = req.body.stripe_id
-        console.log(customerID, stripeID)
 
         stripe.paymentMethods.attach(
             stripeID,
@@ -85,8 +83,8 @@ express()
     })
 
     // For testing purposes
-    .get('/', (req, res) => {
+    .get('/', (_req, res) => {
         res.status(200).send('Hello world!')
     })
 
-    .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+    .listen(PORT, () => console.log(`Listening on port ${ PORT }`))
