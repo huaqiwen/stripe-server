@@ -1,3 +1,5 @@
 *.html linguist-detectable=false
 *.ejs linguist-detectable=false
 public/*.ejs linguist-detectable=false
+views/pages/*.ejs linguist-detectable=false
+views/partials/*.ejs linguist-detectable=false
