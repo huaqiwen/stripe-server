@@ -49,6 +49,21 @@ express()
         });
     })
 
+    // Retrieve a list of customers by email
+    .post('/retrieve_users', (req, res) => {
+        console.log(req.body);
+        const email = req.body.email;
+
+        stripe.customers.list(
+            { email: email }
+        ).then((customers) => {
+            res.status(200).send(customers)
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).end()
+        })
+    })
+
     // Fetch ephemeral keys by `customer_id` and `api_version`
     .post('/ephemeral_keys', (req, res) => {
         console.log(req.body)
