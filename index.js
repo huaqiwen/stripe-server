@@ -42,7 +42,7 @@ express()
             name: name,
             email: email
         }).then((customer) => {
-            res.status(200).send(customer.id)
+            res.status(200).send(customer)
         }).catch((err) => {
             console.log(err);
             res.status(500).end()
